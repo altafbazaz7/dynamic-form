@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Form from "./Form";
 
-function App() {
+const App = () => {
+
+
+  const fields = [
+    { inputType: 'text', label: 'Name', key: 'name' },
+    { inputType: 'email', label: 'Email', key: 'email' },
+    { inputType: 'radio', label: 'Gender', key: 'gender' },
+    { inputType: 'select', label: 'Place', key: 'place' },
+    { inputType: 'checkbox', label: 'Consent', key: 'consent' },
+  ];
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Form
+        fields={fields}
+        onSubmit={() => {}}
+      />
+    </>
   );
-}
+};
 
 export default App;
