@@ -4,30 +4,10 @@ const Form = ({ fields, onSubmit }) => {
   const [formDetails, setFormDetails] = useState({});
 
   const handleInputChange = (e, key) => {
-    setFormDetails((prev) => ({
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setFormDetails(prev => ({
       ...prev,
-      [key]: e.target.value,
-    }));
-  };
-
-  const handleRadioChange = (e, key) => {
-    setFormDetails((prev) => ({
-      ...prev,
-      [key]: e.target.value,
-    }));
-  };
-
-  const handleSelectChange = (e, key) => {
-    setFormDetails((prev) => ({
-      ...prev,
-      [key]: e.target.value,
-    }));
-  };
-
-  const handleCheckboxChange = (e, key) => {
-    setFormDetails((prev) => ({
-      ...prev,
-      [key]: e.target.checked,
+      [key]: value,
     }));
   };
 
@@ -48,6 +28,7 @@ const Form = ({ fields, onSubmit }) => {
 
     switch (inputType) {
       case "text":
+      case "email":
         return (
           <InputField
             key={key}
@@ -61,25 +42,26 @@ const Form = ({ fields, onSubmit }) => {
         return (
           <RadioField
             label={label}
-            value={formDetails.gender}
-            onChange={(e) => handleRadioChange(e, key)}
+            value={formDetails[key]}
+            onChange={(e) => handleInputChange(e, key)}
+            options={["Male", "Female"]} 
           />
         );
       case "select":
         return (
           <SelectField
             label={label}
-            value={formDetails.place}
-            onChange={(e) => handleSelectChange(e, key)}
-            options={["Delhi", "Mumbai", "Kolkata"]}
+            value={formDetails[key]}
+            onChange={(e) => handleInputChange(e, key)}
+            options={["Delhi", "Mumbai", "Kolkata"]} 
           />
         );
       case "checkbox":
         return (
           <CheckboxField
             label={label}
-            value={formDetails.consent}
-            onChange={(e) => handleCheckboxChange(e, key)}
+            value={formDetails[key]}
+            onChange={(e) => handleInputChange(e, key)}
           />
         );
       default:
@@ -121,7 +103,7 @@ const RadioField = ({ label, value, onChange, options }) => {
   return (
     <div className="gender__section">
       <label>{label}</label>
-      {["Male", "Female"].map((option) => (
+      {options.map((option) => (
         <div key={option}>
           <input
             type="radio"
@@ -154,7 +136,7 @@ const SelectField = ({ label, value, onChange, options }) => {
 const CheckboxField = ({ label, value, onChange }) => {
   return (
     <div className="checkbox__element">
-      <input type="checkbox" value={value} onChange={onChange} />
+      <input type="checkbox" checked={value} onChange={onChange} />
       <label>{label}</label>
     </div>
   );
